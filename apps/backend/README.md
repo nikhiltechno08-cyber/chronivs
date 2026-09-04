@@ -5,7 +5,7 @@ FastAPI + PostgreSQL + SQLAlchemy 2.0 + Alembic + Cloudinary media storage.
 ## Setup
 
 ```bash
-cd backend
+cd apps/backend
 python -m venv .venv
 
 # Windows
@@ -61,7 +61,7 @@ alembic upgrade head
 ## Run locally
 
 ```bash
-uvicorn main:app --reload --host 127.0.0.1 --port 8000
+python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 ```
 
 - Health: `GET http://127.0.0.1:8000/health`
@@ -133,7 +133,7 @@ python scripts/verify_auth_unit.py
 ## Structure
 
 ```
-backend/
+apps/backend/
   app/
     api/          # routers + exception handlers
     auth/         # JWT auth (local) + OAuth-ready providers/

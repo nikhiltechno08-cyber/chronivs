@@ -1,7 +1,7 @@
 # Chronivs Cleanup & Performance Audit
 
 Date: 2026-07-25  
-Scope: Frontend (`apps/frontend`) + Backend (`backend`)  
+Scope: Frontend (`apps/frontend`) + Backend (`apps/backend`)
 Constraint: **No UI / layout / animation / typography / color / flow changes**
 
 ---
@@ -15,6 +15,7 @@ Completed a high-confidence production cleanup pass focused on dead code removal
 ## Files removed (dead / temporary)
 
 ### Frontend
+
 - Unused performance helpers: `utils/performance/*`
 - Unused responsive/image helpers: `utils/responsive/*`, `utils/image/image-props.ts`
 - Unused hooks: `use-mounted.ts`, `use-theme.ts`
@@ -27,6 +28,7 @@ Completed a high-confidence production cleanup pass focused on dead code removal
 - Deprecated unused `resolvePhotos` helper
 
 ### Backend
+
 - `_tmp_pay_test.py` (debug probe)
 - Entire unused `app/crud/` scaffolding
 - `app/services/autosave.py` (never wired)
@@ -38,16 +40,16 @@ Completed a high-confidence production cleanup pass focused on dead code removal
 
 ## Files optimized
 
-| Area | Change |
-|------|--------|
-| `templateRenderers.tsx` | Removed eager import of **all** template CSS; CSS now loads with each template chunk |
-| Birthday girlfriend / mother / father | Scene-level `lazy()` + prefetch (matches anniversary/proposal) |
-| `use-audio-recorder.ts` | `URL.revokeObjectURL` on replace / clear / unmount |
-| `CinematicEnding.tsx` | Restart timeout cleared on unmount |
-| `CheckoutSheet.tsx` | Clears session media after payment success |
-| `useEndingActions.ts` | Clears session media on Back to Home |
-| `experience-data-adapter.ts` | Restored gallery URLs now applied to ExperienceData (was built then dropped) |
-| Barrels (`features`, `services`, `hooks`, `animations`, `components`, `experience-engine`) | Trimmed dead re-exports that forced heavy modules |
+| Area                                                                                       | Change                                                                               |
+| ------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------ |
+| `templateRenderers.tsx`                                                                    | Removed eager import of **all** template CSS; CSS now loads with each template chunk |
+| Birthday girlfriend / mother / father                                                      | Scene-level `lazy()` + prefetch (matches anniversary/proposal)                       |
+| `use-audio-recorder.ts`                                                                    | `URL.revokeObjectURL` on replace / clear / unmount                                   |
+| `CinematicEnding.tsx`                                                                      | Restart timeout cleared on unmount                                                   |
+| `CheckoutSheet.tsx`                                                                        | Clears session media after payment success                                           |
+| `useEndingActions.ts`                                                                      | Clears session media on Back to Home                                                 |
+| `experience-data-adapter.ts`                                                               | Restored gallery URLs now applied to ExperienceData (was built then dropped)         |
+| Barrels (`features`, `services`, `hooks`, `animations`, `components`, `experience-engine`) | Trimmed dead re-exports that forced heavy modules                                    |
 
 ---
 

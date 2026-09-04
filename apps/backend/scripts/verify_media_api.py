@@ -2,7 +2,7 @@
 
 Requires:
 - migrated database
-- Cloudinary env vars in backend/.env
+- Cloudinary env vars in apps/backend/.env
 - API server running on 127.0.0.1:8000  OR pass --direct for in-process TestClient
 
 Usage:

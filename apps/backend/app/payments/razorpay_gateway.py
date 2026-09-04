@@ -35,7 +35,7 @@ class RazorpayGateway:
             missing = settings.razorpay_missing()
             if missing:
                 raise PaymentException(
-                    "Payment gateway is not configured. Set Razorpay keys in backend/.env "
+                    "Payment gateway is not configured. Set Razorpay keys in apps/backend/.env "
                     f"({', '.join(missing)}).",
                     code="razorpay_not_configured",
                     details={"missing": missing},
