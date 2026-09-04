@@ -1,0 +1,242 @@
+@import 'tailwindcss';
+
+/* ─── Tailwind theme bridge ─────────────────────────────────────── */
+
+@theme {
+  --breakpoint-xs: 24.375rem;
+  --breakpoint-sm: 26.875rem;
+  --breakpoint-md: 48rem;
+  --breakpoint-lg: 64rem;
+  --breakpoint-xl: 80rem;
+  --breakpoint-2xl: 90rem;
+  --breakpoint-3xl: 120rem;
+}
+
+/* ─── Shared token defaults (dark-first, landing-derived) ───────── */
+
+:root,
+[data-theme='dark'] {
+  /* Primary / accent */
+  --chronivs-primary: #cda45e;
+  --chronivs-primary-bright: #e6c584;
+  --chronivs-accent-champagne: #ddc79a;
+  --chronivs-accent-ivory: #f4efe4;
+
+  /* Neutrals */
+  --chronivs-neutral-ink: #efe9dc;
+  --chronivs-neutral-muted: #a49c8d;
+  --chronivs-neutral-faint: #736c60;
+  --chronivs-neutral-black: #090909;
+  --chronivs-neutral-black-soft: #0d0d0c;
+
+  /* Surfaces */
+  --chronivs-bg-primary: #090909;
+  --chronivs-bg-secondary: #0d0d0c;
+  --chronivs-bg-tertiary: #151310;
+  --chronivs-surface-primary: rgba(255, 255, 255, 0.035);
+  --chronivs-surface-strong: rgba(255, 255, 255, 0.06);
+  --chronivs-surface-elevated: #1c1a16;
+
+  /* Glass */
+  --chronivs-glass-bg: rgba(12, 12, 11, 0.55);
+  --chronivs-glass-border: rgba(233, 217, 184, 0.07);
+  --chronivs-glass-opacity: 0.55;
+  --chronivs-glass-saturation: 140%;
+  --chronivs-blur-glass: 18px;
+
+  /* Borders */
+  --chronivs-border-default: rgba(233, 217, 184, 0.14);
+  --chronivs-border-subtle: rgba(233, 217, 184, 0.07);
+  --chronivs-border-strong: rgba(233, 217, 184, 0.28);
+
+  /* Status */
+  --chronivs-success: #6bbf8a;
+  --chronivs-warning: #e6b85c;
+  --chronivs-danger: #e07070;
+  --chronivs-info: #7aabde;
+
+  /* Foreground */
+  --chronivs-fg-primary: #efe9dc;
+  --chronivs-fg-secondary: #a49c8d;
+  --chronivs-fg-muted: #736c60;
+  --chronivs-fg-inverse: #171106;
+
+  /* Typography sizes */
+  --chronivs-text-hero-xl: clamp(2.5rem, 5.2vw, 4.625rem);
+  --chronivs-text-hero-l: clamp(2.25rem, 6vw, 4.5rem);
+  --chronivs-text-heading: clamp(2rem, 4vw, 3.125rem);
+  --chronivs-text-subheading: 1.5rem;
+  --chronivs-text-body: 1rem;
+  --chronivs-text-body-sm: 0.9375rem;
+  --chronivs-text-caption: 0.78125rem;
+  --chronivs-text-button: 0.90625rem;
+  --chronivs-text-eyebrow: 0.71875rem;
+
+  /* Spacing */
+  --chronivs-space-1: 4px;
+  --chronivs-space-2: 8px;
+  --chronivs-space-3: 12px;
+  --chronivs-space-4: 16px;
+  --chronivs-space-5: 20px;
+  --chronivs-space-6: 24px;
+  --chronivs-space-8: 32px;
+  --chronivs-space-10: 40px;
+  --chronivs-space-12: 48px;
+  --chronivs-space-16: 64px;
+  --chronivs-space-20: 80px;
+
+  /* Radius */
+  --chronivs-radius-sm: 6px;
+  --chronivs-radius-md: 8px;
+  --chronivs-radius-lg: 12px;
+  --chronivs-radius-xl: 16px;
+  --chronivs-radius-pill: 9999px;
+
+  /* Elevation */
+  --chronivs-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --chronivs-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.35);
+  --chronivs-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+  --chronivs-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.45);
+  --chronivs-shadow-xl: 0 30px 80px -20px rgba(0, 0, 0, 0.6);
+
+  /* Blur */
+  --chronivs-blur-sm: 8px;
+  --chronivs-blur-md: 12px;
+  --chronivs-blur-lg: 20px;
+
+  /* Container */
+  --chronivs-container-max: 1280px;
+  --chronivs-container-content: 960px;
+  --chronivs-container-narrow: 720px;
+  --chronivs-padding-mobile: 22px;
+  --chronivs-padding-tablet: 32px;
+  --chronivs-padding-desktop: 48px;
+
+  /* Animation */
+  --chronivs-duration-instant: 0ms;
+  --chronivs-duration-fast: 150ms;
+  --chronivs-duration-normal: 300ms;
+  --chronivs-duration-slow: 500ms;
+  --chronivs-duration-slower: 800ms;
+  --chronivs-duration-cinematic: 1000ms;
+
+  --chronivs-ease-linear: linear;
+  --chronivs-ease-in: cubic-bezier(0.4, 0, 1, 1);
+  --chronivs-ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --chronivs-ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --chronivs-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --chronivs-ease-cinematic: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  /* Focus */
+  --chronivs-focus-ring: var(--chronivs-primary-bright);
+}
+
+/* ─── Light theme ───────────────────────────────────────────────── */
+
+[data-theme='light'] {
+  --chronivs-bg-primary: #faf8f4;
+  --chronivs-bg-secondary: #f4efe4;
+  --chronivs-bg-tertiary: #ebe4d6;
+  --chronivs-surface-primary: rgba(255, 255, 255, 0.85);
+  --chronivs-surface-strong: rgba(255, 255, 255, 0.95);
+  --chronivs-surface-elevated: #ffffff;
+
+  --chronivs-glass-bg: rgba(255, 255, 255, 0.72);
+  --chronivs-glass-border: rgba(205, 164, 94, 0.15);
+  --chronivs-glass-opacity: 0.72;
+
+  --chronivs-border-default: rgba(115, 108, 96, 0.2);
+  --chronivs-border-subtle: rgba(115, 108, 96, 0.1);
+  --chronivs-border-strong: rgba(115, 108, 96, 0.35);
+
+  --chronivs-fg-primary: #1a1814;
+  --chronivs-fg-secondary: #4a453c;
+  --chronivs-fg-muted: #736c60;
+  --chronivs-fg-inverse: #f4efe4;
+
+  --chronivs-neutral-ink: #1a1814;
+  --chronivs-neutral-muted: #4a453c;
+  --chronivs-neutral-faint: #736c60;
+
+  --chronivs-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.06);
+  --chronivs-shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --chronivs-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+  --chronivs-shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
+  --chronivs-shadow-xl: 0 30px 80px -20px rgba(0, 0, 0, 0.15);
+}
+
+/* ─── Base application styles ───────────────────────────────────── */
+
+.chronivs-app {
+  background-color: var(--chronivs-bg-primary);
+  color: var(--chronivs-fg-primary);
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: var(--chronivs-text-body);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.chronivs-app ::selection {
+  background: var(--chronivs-primary);
+  color: var(--chronivs-fg-inverse);
+}
+
+.chronivs-app :focus-visible {
+  outline: 1.5px solid var(--chronivs-focus-ring);
+  outline-offset: 4px;
+}
+
+/* Typography utilities */
+.chronivs-text-hero-xl {
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: var(--chronivs-text-hero-xl);
+  line-height: 1.04;
+  letter-spacing: -0.01em;
+  font-weight: 400;
+}
+
+.chronivs-text-hero-l {
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: var(--chronivs-text-hero-l);
+  line-height: 1.06;
+  font-weight: 400;
+}
+
+.chronivs-text-heading {
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: var(--chronivs-text-heading);
+  line-height: 1.08;
+  font-weight: 400;
+}
+
+.chronivs-text-subheading {
+  font-family: var(--font-display), 'Fraunces', serif;
+  font-size: var(--chronivs-text-subheading);
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+.chronivs-text-eyebrow {
+  font-family: var(--font-mono), 'IBM Plex Mono', monospace;
+  font-size: var(--chronivs-text-eyebrow);
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--chronivs-primary);
+}
+
+/* Glass utility */
+.chronivs-glass {
+  background: var(--chronivs-glass-bg);
+  border: 1px solid var(--chronivs-glass-border);
+  backdrop-filter: blur(var(--chronivs-blur-glass)) saturate(var(--chronivs-glass-saturation));
+  -webkit-backdrop-filter: blur(var(--chronivs-blur-glass)) saturate(var(--chronivs-glass-saturation));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chronivs-app *,
+  .chronivs-app *::before,
+  .chronivs-app *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

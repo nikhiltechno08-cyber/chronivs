@@ -1,0 +1,64 @@
+/* Hero Layer 2 — ambient golden particles (CSS only) */
+
+.landing-hero-particles {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.landing-hero-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(255, 248, 235, 0.95) 0%,
+    rgba(233, 217, 184, 0.55) 45%,
+    rgba(205, 164, 94, 0.2) 100%
+  );
+  opacity: var(--hero-op-min, 0.08);
+  will-change: transform, opacity;
+  animation:
+    heroParticleFloat var(--hero-dur, 14s) ease-in-out var(--hero-delay, 0s) infinite alternate,
+    heroParticleTwinkle calc(var(--hero-dur, 14s) * 1.35) ease-in-out calc(var(--hero-delay, 0s) * 0.6)
+      infinite alternate;
+}
+
+/* Depth — near: larger, softer, slower */
+.landing-hero-particle--near {
+  filter: blur(1.5px);
+}
+
+.landing-hero-particle--mid {
+  filter: blur(0.5px);
+}
+
+.landing-hero-particle--far {
+  filter: none;
+}
+
+@keyframes heroParticleFloat {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(var(--hero-dx, 6px), var(--hero-dy, 12px), 0);
+  }
+}
+
+@keyframes heroParticleTwinkle {
+  from {
+    opacity: var(--hero-op-min, 0.08);
+  }
+  to {
+    opacity: var(--hero-op-max, 0.18);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-particle {
+    animation: none;
+    opacity: var(--hero-op-max, 0.12);
+  }
+}

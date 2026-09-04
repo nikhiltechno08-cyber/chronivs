@@ -1,0 +1,16 @@
+{
+  "extends": "@chronivs/config/typescript/nextjs",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./src/*"],
+      "@chronivs/shared": ["../../packages/shared/src/index.ts"],
+      "@chronivs/shared/*": ["../../packages/shared/src/*"],
+      "@chronivs/ui": ["../../packages/ui/src/index.ts"],
+      "@chronivs/ui/*": ["../../packages/ui/src/*"]
+    },
+    "plugins": [{ "name": "next" }]
+  },
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "exclude": ["node_modules"]
+}

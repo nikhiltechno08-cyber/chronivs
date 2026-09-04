@@ -1,0 +1,39 @@
+{
+  "name": "@chronivs/experience-integration",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Experience Integration Layer — orchestrates all Chronivs Phase 2 modules",
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "exports": {
+    ".": "./src/index.ts",
+    "./types": "./src/types/index.ts",
+    "./ports": "./src/ports/index.ts",
+    "./react": "./src/react/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix"
+  },
+  "dependencies": {
+    "@chronivs/draft-engine": "*",
+    "@chronivs/experience-core": "*",
+    "@chronivs/experience-renderer": "*",
+    "@chronivs/form-engine": "*",
+    "@chronivs/preview-engine": "*",
+    "@chronivs/recipe-engine": "*",
+    "@chronivs/upload-engine": "*"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@chronivs/config": "*",
+    "@types/react": "^19.1.6",
+    "eslint": "^9.28.0",
+    "react": "^19.1.0",
+    "typescript": "^5.8.3"
+  }
+}

@@ -1,0 +1,153 @@
+/* Hero Layer 3 — soft glass glow overlays */
+
+.landing-hero-glass {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.landing-hero-glass-glow {
+  position: absolute;
+  border-radius: 50%;
+  mix-blend-mode: soft-light;
+  will-change: transform, opacity;
+  animation: heroGlassDrift var(--hero-glass-dur, 24s) ease-in-out var(--hero-glass-delay, 0s)
+    infinite alternate;
+}
+
+/* Glow 1 — upper right */
+.landing-hero-glass-glow--one {
+  width: 720px;
+  height: 720px;
+  top: -12%;
+  right: -8%;
+  opacity: 0.2;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 208, 120, 0.28) 0%,
+    rgba(255, 208, 120, 0.08) 38%,
+    transparent 68%
+  );
+  filter: blur(120px);
+  --hero-glass-tx: 16px;
+  --hero-glass-ty: 12px;
+  --hero-glass-rot: 1.5deg;
+}
+
+/* Glow 2 — center */
+.landing-hero-glass-glow--two {
+  width: 500px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  transform: translate3d(-50%, -50%, 0);
+  opacity: 0.16;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 215, 150, 0.22) 0%,
+    rgba(255, 215, 150, 0.06) 42%,
+    transparent 70%
+  );
+  filter: blur(150px);
+  --hero-glass-tx: -14px;
+  --hero-glass-ty: 18px;
+  --hero-glass-rot: -1deg;
+  animation-name: heroGlassDriftCenter;
+}
+
+/* Glow 3 — bottom left */
+.landing-hero-glass-glow--three {
+  width: 450px;
+  height: 450px;
+  bottom: -10%;
+  left: -6%;
+  opacity: 0.1;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 235, 180, 0.18) 0%,
+    rgba(255, 235, 180, 0.04) 40%,
+    transparent 68%
+  );
+  filter: blur(140px);
+  --hero-glass-tx: 12px;
+  --hero-glass-ty: -16px;
+  --hero-glass-rot: 2deg;
+}
+
+@keyframes heroGlassDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1) rotate(0deg);
+    opacity: var(--hero-glass-op-from, 0.14);
+  }
+  to {
+    transform: translate3d(var(--hero-glass-tx, 12px), var(--hero-glass-ty, 14px), 0) scale(1.05)
+      rotate(var(--hero-glass-rot, 1deg));
+    opacity: var(--hero-glass-op-to, 0.2);
+  }
+}
+
+@keyframes heroGlassDriftCenter {
+  from {
+    transform: translate3d(-50%, -50%, 0) scale(1) rotate(0deg);
+    opacity: 0.14;
+  }
+  to {
+    transform: translate3d(calc(-50% + var(--hero-glass-tx, -12px)), calc(-50% + var(--hero-glass-ty, 16px)), 0)
+      scale(1.05) rotate(var(--hero-glass-rot, -1deg));
+    opacity: 0.18;
+  }
+}
+
+.landing-hero-glass-glow--one {
+  --hero-glass-op-from: 0.16;
+  --hero-glass-op-to: 0.2;
+}
+
+.landing-hero-glass-glow--two {
+  --hero-glass-op-from: 0.12;
+  --hero-glass-op-to: 0.16;
+}
+
+.landing-hero-glass-glow--three {
+  --hero-glass-op-from: 0.08;
+  --hero-glass-op-to: 0.1;
+}
+
+@media (max-width: 1100px) {
+  .landing-hero-glass-glow--one {
+    width: 576px;
+    height: 576px;
+  }
+
+  .landing-hero-glass-glow--two {
+    width: 400px;
+    height: 400px;
+  }
+
+  .landing-hero-glass-glow--three {
+    width: 360px;
+    height: 360px;
+  }
+}
+
+@media (max-width: 640px) {
+  .landing-hero-glass-glow--three {
+    display: none;
+  }
+
+  .landing-hero-glass-glow--one {
+    opacity: 0.14;
+  }
+
+  .landing-hero-glass-glow--two {
+    opacity: 0.11;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .landing-hero-glass-glow {
+    animation: none;
+  }
+}

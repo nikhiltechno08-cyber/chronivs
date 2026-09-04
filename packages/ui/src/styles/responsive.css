@@ -1,0 +1,85 @@
+/* ─── Responsive utilities ─────────────────────────────────────── */
+
+/* Viewport */
+.chronivs-h-dvh {
+  height: 100dvh;
+}
+
+.chronivs-min-h-dvh {
+  min-height: 100dvh;
+}
+
+.chronivs-h-svh {
+  height: 100svh;
+}
+
+.chronivs-min-h-svh {
+  min-height: 100svh;
+}
+
+/* Safe areas */
+.chronivs-safe-top {
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.chronivs-safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+.chronivs-safe-x {
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+}
+
+/* Orientation */
+@media (orientation: landscape) {
+  .chronivs-landscape-only {
+    display: block;
+  }
+  .chronivs-portrait-only {
+    display: none;
+  }
+}
+
+@media (orientation: portrait) {
+  .chronivs-landscape-only {
+    display: none;
+  }
+  .chronivs-portrait-only {
+    display: block;
+  }
+}
+
+/* Device visibility */
+.chronivs-mobile-only {
+  display: block;
+}
+
+.chronivs-tablet-up {
+  display: none;
+}
+
+.chronivs-desktop-only {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .chronivs-mobile-only {
+    display: none;
+  }
+  .chronivs-tablet-up {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chronivs-desktop-only {
+    display: block;
+  }
+}
+
+/* Overflow guard */
+.chronivs-no-scroll-x {
+  overflow-x: hidden;
+  max-width: 100vw;
+}

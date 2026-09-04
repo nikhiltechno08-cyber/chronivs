@@ -1,0 +1,1432 @@
+/* Anniversary Wife — exact port from chronivs-anniversary-experience.html */
+
+.anniversary-experience {
+  --aw-ivory: #FBF3ED;
+  --aw-cream: #F7E9DE;
+  --aw-champagne: #E8C39E;
+  --aw-rosegold: #D9A79C;
+  --aw-burgundy: #7B2D3E;
+  --aw-warmwhite: #FFFDFB;
+  --aw-goldlight: #F3C98B;
+  --aw-peach: #F0B79C;
+  --aw-ink: #4A2E2E;
+  --aw-line: rgba(74, 46, 46, 0.16);
+  --aw-shadow: rgba(74, 46, 46, 0.28);
+  --aw-serif: var(--font-aw-serif), Georgia, 'Iowan Old Style', 'Palatino Linotype', 'Book Antiqua', serif;
+  --aw-script: var(--font-aw-script), 'Segoe Script', 'Bradley Hand', 'Snell Roundhand', cursive;
+  --aw-sans: var(--font-aw-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  height: 100%;
+  overflow: hidden;
+  background: var(--aw-ink);
+  font-family: var(--aw-serif);
+  color: var(--aw-ink);
+}
+
+.anniversary-experience * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.anniversary-experience button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+.anniversary-experience .aw-stage {
+  position: fixed;
+  inset: 0;
+  width: 100dvw;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* Ambient layers */
+.anniversary-experience .aw-bg-layer {
+  position: absolute;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  opacity: 0;
+  transition: opacity 2.4s ease;
+  animation: awBreathe 14s ease-in-out infinite;
+  z-index: 0;
+}
+.anniversary-experience .aw-bg-layer.on {
+  opacity: 1;
+  will-change: opacity;
+}
+@keyframes awBreathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.035); }
+}
+
+.anniversary-experience .aw-fx-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.anniversary-experience .aw-grain {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.045;
+  mix-blend-mode: overlay;
+  z-index: 4;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.anniversary-experience .aw-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 45%, rgba(60, 25, 30, 0.32) 100%);
+}
+
+.anniversary-experience .aw-rays {
+  position: absolute;
+  inset: -20%;
+  pointer-events: none;
+  opacity: 0.28;
+  z-index: 2;
+  background: conic-gradient(
+    from 210deg at 50% 15%,
+    rgba(255, 225, 190, 0) 0deg,
+    rgba(255, 225, 190, 0.28) 8deg,
+    rgba(255, 225, 190, 0) 22deg,
+    rgba(255, 225, 190, 0) 338deg,
+    rgba(255, 225, 190, 0.22) 352deg,
+    rgba(255, 225, 190, 0) 360deg
+  );
+  animation: awRayspin 70s linear infinite;
+  filter: blur(2px);
+}
+@keyframes awRayspin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.anniversary-experience .aw-fog {
+  position: absolute;
+  left: -10%;
+  right: -10%;
+  bottom: -10%;
+  height: 40%;
+  pointer-events: none;
+  opacity: 0.35;
+  z-index: 2;
+  background: linear-gradient(0deg, rgba(255, 245, 235, 0.55), rgba(255, 245, 235, 0));
+  filter: blur(8px);
+  animation: awFogdrift 20s ease-in-out infinite;
+}
+@keyframes awFogdrift {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(3%); }
+}
+
+/* Scenes container */
+.anniversary-experience .aw-scenes {
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+}
+
+.anniversary-experience .aw-scene-motion {
+  position: absolute;
+  inset: 0;
+  contain: layout paint;
+}
+
+.anniversary-experience .aw-scene {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8vh 6vw;
+}
+
+/* Typography */
+.anniversary-experience .aw-eyebrow {
+  font-family: var(--aw-sans);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--aw-burgundy);
+  opacity: 0;
+  margin-bottom: 16px;
+  animation: awRiseIn 1.2s ease forwards;
+  animation-delay: 0.15s;
+}
+.anniversary-experience .aw-eyebrow-champagne {
+  color: var(--aw-champagne);
+}
+
+.anniversary-experience .aw-title {
+  font-size: clamp(28px, 6vw, 58px);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--aw-ink);
+  opacity: 0;
+  animation: awRiseIn 1.4s ease forwards;
+  animation-delay: 0.5s;
+}
+.anniversary-experience .aw-title em {
+  font-style: italic;
+  color: var(--aw-burgundy);
+}
+.anniversary-experience .aw-title-sm {
+  font-size: clamp(22px, 4vw, 34px);
+}
+.anniversary-experience .aw-title-light {
+  color: var(--aw-warmwhite);
+}
+.anniversary-experience .aw-em-gold {
+  color: var(--aw-goldlight);
+}
+
+.anniversary-experience .aw-sub {
+  font-family: var(--aw-sans);
+  font-size: clamp(13px, 1.6vw, 17px);
+  color: #6b4a4a;
+  max-width: 540px;
+  line-height: 1.75;
+  margin-top: 16px;
+  opacity: 0;
+  animation: awRiseIn 1.2s ease forwards;
+  animation-delay: 0.95s;
+}
+.anniversary-experience .aw-sub-tight {
+  margin-top: 18px;
+}
+
+@keyframes awRiseIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CTA */
+.anniversary-experience .aw-cta {
+  position: relative;
+  margin-top: 40px;
+  padding: 16px 40px;
+  border-radius: 44px;
+  transition: background .3s, transform .3s, box-shadow .3s, opacity 1s ease;
+  border: 1px solid var(--aw-champagne);
+  background: rgba(255, 253, 251, 0.55);
+  backdrop-filter: blur(6px);
+  font-family: var(--aw-sans);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--aw-ink);
+  cursor: pointer;
+  opacity: 0;
+  min-height: 44px;
+  animation: awRiseIn 1.2s ease forwards;
+  animation-delay: 1.35s;
+  overflow: visible;
+}
+.anniversary-experience .aw-cta:not(.aw-cta-show) {
+  animation: none;
+  opacity: 0;
+  pointer-events: none;
+}
+.anniversary-experience .aw-cta-show {
+  opacity: 1;
+}
+.anniversary-experience .aw-cta:hover {
+  background: var(--aw-goldlight);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(180, 110, 90, 0.3);
+}
+.anniversary-experience .aw-cta:active {
+  transform: translateY(0) scale(0.98);
+}
+.anniversary-experience .aw-cta-small {
+  padding: 11px 28px;
+  font-size: 11px;
+  margin-top: 26px;
+}
+
+.anniversary-experience .aw-mini-heart {
+  position: fixed;
+  font-size: 12px;
+  color: var(--aw-burgundy);
+  opacity: 0;
+  pointer-events: none;
+  animation: awMiniHeart 1.4s ease forwards;
+  z-index: 300;
+}
+@keyframes awMiniHeart {
+  0% { opacity: 0; transform: translateY(0) scale(0.6); }
+  20% { opacity: 0.9; }
+  100% { opacity: 0; transform: translateY(-46px) scale(1.1); }
+}
+
+/* Progress dots */
+.anniversary-experience .aw-dots {
+  position: absolute;
+  top: max(18px, env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  z-index: 20;
+}
+.anniversary-experience .aw-dots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(74, 46, 46, 0.22);
+  transition: all 0.4s ease;
+}
+.anniversary-experience .aw-dots span.on {
+  background: var(--aw-burgundy);
+  width: 17px;
+  border-radius: 4px;
+}
+
+/* Mute button: shared .exp-sound-toggle */
+
+/* Scene 1: Frame */
+.anniversary-experience .aw-frame-wrap {
+  perspective: 1600px;
+  width: min(58vw, 240px);
+  height: min(38vh, 300px);
+  margin-bottom: 6px;
+}
+.anniversary-experience .aw-frame-inner {
+  width: 100%;
+  height: 100%;
+  border: 12px solid var(--aw-warmwhite);
+  outline: 2px solid var(--aw-champagne);
+  border-radius: 6px;
+  box-shadow: 0 30px 60px var(--aw-shadow);
+  background: radial-gradient(circle at 50% 40%, var(--aw-peach), var(--aw-rosegold) 75%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  opacity: 0;
+  animation: awFrameFloat 7s ease-in-out infinite, awFrameIn 1.6s ease forwards;
+  animation-delay: 0s, 0.3s;
+  transform: rotateY(-8deg) rotateX(4deg);
+}
+@keyframes awFrameIn {
+  from { opacity: 0; transform: rotateY(-8deg) rotateX(4deg) translateY(20px) scale(0.92); }
+  to { opacity: 1; transform: rotateY(-8deg) rotateX(4deg) translateY(0) scale(1); }
+}
+@keyframes awFrameFloat {
+  0%, 100% { transform: rotateY(-8deg) rotateX(4deg) translateY(0); }
+  50% { transform: rotateY(6deg) rotateX(-2deg) translateY(-10px); }
+}
+
+/* Scene 2: Photo */
+.anniversary-experience .aw-photo-wrap {
+  width: min(72vw, 320px);
+  height: min(42vh, 320px);
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px var(--aw-shadow);
+  background: linear-gradient(160deg, #caa79c, #7B2D3E);
+}
+.anniversary-experience .aw-photo-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 60px;
+  filter: blur(14px) saturate(0.6) brightness(0.8);
+  opacity: 0.5;
+  transition: filter 3.2s ease, opacity 3.2s ease;
+}
+.anniversary-experience .aw-photo-content .aw-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.anniversary-experience .aw-photo-wrap.clear .aw-photo-content {
+  filter: blur(0) saturate(1) brightness(1);
+  opacity: 1;
+}
+.anniversary-experience .aw-photo-sheen {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(255, 255, 255, 0) 40%, rgba(255, 255, 255, 0.45) 50%, rgba(255, 255, 255, 0) 60%);
+  transform: translateX(-120%);
+}
+.anniversary-experience .aw-photo-wrap.clear .aw-photo-sheen {
+  animation: awSheenMove 1.8s ease forwards;
+}
+@keyframes awSheenMove {
+  to { transform: translateX(120%); }
+}
+.anniversary-experience .aw-caption {
+  font-style: italic;
+  font-size: 15px;
+  color: #6b3a3a;
+  margin-top: 22px;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.anniversary-experience .aw-caption.show {
+  opacity: 1;
+}
+
+/* Scene 3: Ribbon */
+#scene-wife-ribbon.aw-scene {
+  justify-content: flex-start;
+  padding-top: clamp(72px, 14vh, 140px);
+  gap: clamp(28px, 5vh, 56px);
+}
+#scene-wife-ribbon .aw-title-sm {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+.anniversary-experience .aw-ribbon-wrap {
+  width: min(92vw, 760px);
+  position: relative;
+  flex-shrink: 0;
+  min-height: 160px;
+  padding-bottom: 100px;
+}
+.anniversary-experience .aw-ribbon-track {
+  position: relative;
+  height: 6px;
+  border-radius: 4px;
+  background: rgba(123, 45, 62, 0.12);
+  margin-top: 40px;
+  overflow: hidden;
+}
+.anniversary-experience .aw-ribbon-track::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--aw-champagne), var(--aw-burgundy));
+  width: 0%;
+  transition: width 2.6s ease;
+}
+.anniversary-experience .aw-ribbon-track.go::after {
+  width: 100%;
+}
+.anniversary-experience .aw-ribbon-stops {
+  position: absolute;
+  top: -13px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+}
+.anniversary-experience .aw-r-stop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(12px);
+  transition: all 0.8s ease;
+  cursor: pointer;
+}
+.anniversary-experience .aw-r-stop.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+.anniversary-experience .aw-r-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--aw-warmwhite);
+  border: 3px solid var(--aw-burgundy);
+  box-shadow: 0 0 0 5px rgba(232, 195, 158, 0.25);
+}
+.anniversary-experience .aw-r-label {
+  font-family: var(--aw-sans);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6b3a3a;
+  margin-top: 10px;
+}
+.anniversary-experience .aw-r-card {
+  position: absolute;
+  left: 50%;
+  bottom: 90px;
+  transform: translate(-50%, 10px) scale(0.7);
+  width: min(76vw, 300px);
+  background: rgba(251, 243, 237, 0.96);
+  border-radius: 14px;
+  padding: 20px;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 22px 50px rgba(0, 0, 0, 0.22);
+  z-index: 15;
+}
+.anniversary-experience .aw-r-card.show {
+  opacity: 1;
+  transform: translate(-50%, 0) scale(1);
+  pointer-events: auto;
+}
+.anniversary-experience .aw-r-card-icon {
+  font-size: 34px;
+  margin-bottom: 8px;
+}
+.anniversary-experience .aw-r-card-q {
+  font-style: italic;
+  font-size: 13px;
+  color: var(--aw-ink);
+}
+
+/* Scene 4: Constellation */
+#scene-wife-stars.aw-scene {
+  justify-content: flex-start;
+  padding-top: clamp(64px, 12vh, 120px);
+  gap: clamp(16px, 3vh, 32px);
+}
+#scene-wife-stars .aw-title-sm {
+  margin-bottom: 0;
+  flex-shrink: 0;
+}
+.anniversary-experience .aw-sky {
+  position: relative;
+  width: 100%;
+  height: clamp(280px, 48vh, 420px);
+  margin-top: clamp(12px, 2vh, 24px);
+  flex-shrink: 0;
+}
+.anniversary-experience .aw-star {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  cursor: pointer;
+  border: none;
+  padding: 0;
+  animation: awTwinkle 3s ease-in-out infinite;
+}
+.anniversary-experience .aw-star::before {
+  content: '★';
+  display: block;
+  font-size: 22px;
+  line-height: 1;
+  color: rgba(232, 195, 158, 0.55);
+  text-shadow: 0 0 8px rgba(232, 195, 158, 0.35);
+  transition: color 0.4s ease, text-shadow 0.4s ease, transform 0.4s ease;
+}
+.anniversary-experience .aw-star-lit::before {
+  color: var(--aw-goldlight);
+  text-shadow: 0 0 14px var(--aw-goldlight);
+  transform: scale(1.15);
+}
+@keyframes awTwinkle {
+  0%, 100% { opacity: 0.65; }
+  50% { opacity: 1; }
+}
+.anniversary-experience .aw-constline-path {
+  stroke: rgba(232, 195, 158, 0.55);
+  stroke-width: 1.2;
+  fill: none;
+  stroke-linecap: round;
+  transition: d 0.4s ease;
+}
+.anniversary-experience .aw-constline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.anniversary-experience .aw-star-card {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0.6);
+  width: min(78vw, 320px);
+  background: rgba(251, 243, 237, 0.95);
+  border-radius: 14px;
+  padding: 24px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.28);
+  z-index: 30;
+}
+.anniversary-experience .aw-star-card.show {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+  pointer-events: auto;
+}
+.anniversary-experience .aw-star-card-icon {
+  font-size: 40px;
+}
+.anniversary-experience .aw-star-card-q {
+  font-style: italic;
+  margin-top: 8px;
+}
+.anniversary-experience .aw-star-card-close {
+  margin-top: 14px;
+  font-family: var(--aw-sans);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aw-burgundy);
+  cursor: pointer;
+  padding: 6px;
+}
+
+/* Scene 5: Puzzle */
+.anniversary-experience .aw-puzzle-outer {
+  position: relative;
+}
+.anniversary-experience .aw-puzzle-frame {
+  width: min(80vw, 300px);
+  height: min(80vw, 300px);
+  max-width: 300px;
+  max-height: 300px;
+  background: linear-gradient(160deg, #8a5a4a, #5c3230);
+  padding: 14px;
+  border-radius: 8px;
+  box-shadow: 0 30px 60px var(--aw-shadow);
+}
+.anniversary-experience .aw-puzzle-grid {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: 3px;
+  background: #3a2020;
+  border-radius: 4px;
+  overflow: hidden;
+}
+.anniversary-experience .aw-tile {
+  position: relative;
+  cursor: grab;
+  touch-action: none;
+  background-size: 300px 300px;
+  transition: filter 0.3s ease, outline 0.2s ease, opacity 0.2s ease;
+  outline: 2px solid transparent;
+  border: none;
+  padding: 0;
+}
+.anniversary-experience .aw-tile.sel {
+  outline: 2px solid var(--aw-goldlight);
+  filter: brightness(1.1);
+}
+.anniversary-experience .aw-puzzle-frame.solved .aw-tile {
+  outline: none;
+}
+.anniversary-experience .aw-puzzle-glow {
+  position: absolute;
+  inset: 0;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(243, 201, 139, 0.9), transparent 70%);
+  transition: opacity 1.2s ease;
+}
+.anniversary-experience .aw-tile.aw-tile-dragging {
+  opacity: 0.25;
+  outline: none;
+}
+.anniversary-experience .aw-tile-ghost {
+  position: fixed;
+  z-index: 200;
+  pointer-events: none;
+  border-radius: 2px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+  cursor: grabbing;
+}
+.anniversary-experience .aw-puzzle-solve-btn {
+  margin-top: 20px;
+  background: rgba(255, 253, 251, 0.72);
+  border-color: rgba(123, 45, 62, 0.25);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+.anniversary-experience .aw-puzzle-glow.on {
+  opacity: 1;
+}
+
+/* Scene 6: Floating frames */
+.anniversary-experience .aw-frames-field {
+  position: relative;
+  width: min(94vw, 720px);
+  height: 300px;
+}
+.anniversary-experience .aw-mem-frame {
+  position: absolute;
+  width: 90px;
+  height: 110px;
+  background: var(--aw-warmwhite);
+  border: 6px solid var(--aw-warmwhite);
+  outline: 1px solid var(--aw-champagne);
+  border-radius: 4px;
+  box-shadow: 0 16px 30px var(--aw-shadow);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  animation: awFrameDrift 8s ease-in-out infinite;
+  overflow: hidden;
+}
+.anniversary-experience .aw-mem-frame .aw-photo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@keyframes awFrameDrift {
+  0%, 100% { transform: translateY(0) rotate(var(--rot, 0deg)); }
+  50% { transform: translateY(-14px) rotate(calc(var(--rot, 0deg) * -1)); }
+}
+.anniversary-experience .aw-mem-modal {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 40;
+}
+.anniversary-experience .aw-mem-modal.show {
+  opacity: 1;
+  pointer-events: auto;
+}
+.anniversary-experience .aw-mem-modal-card {
+  width: min(80vw, 300px);
+  background: var(--aw-warmwhite);
+  border-radius: 12px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+}
+.anniversary-experience .aw-mem-modal-big {
+  font-size: 56px;
+}
+.anniversary-experience .aw-mem-modal-cap {
+  font-family: var(--aw-script);
+  font-size: 20px;
+  color: var(--aw-burgundy);
+  margin-top: 10px;
+}
+.anniversary-experience .aw-mem-modal-close {
+  margin-top: 16px;
+  font-family: var(--aw-sans);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aw-burgundy);
+  cursor: pointer;
+}
+
+/* Scene 7: Letter */
+#scene-wife-letter.aw-scene {
+  justify-content: flex-start;
+  padding-top: clamp(64px, 12vh, 120px);
+  gap: clamp(12px, 2vh, 20px);
+}
+#scene-wife-letter.aw-letter-open {
+  justify-content: center;
+  padding-top: 8vh;
+  padding-bottom: 8vh;
+  gap: clamp(16px, 2.5vh, 24px);
+}
+#scene-wife-letter.aw-letter-open .aw-cta-small {
+  margin-top: 8px;
+}
+#scene-wife-letter.aw-letter-open .aw-rose-pressed {
+  margin-top: 0;
+}
+#scene-wife-letter .aw-letter-eyebrow {
+  font-family: var(--aw-sans);
+  letter-spacing: 0.34em;
+  text-transform: uppercase;
+  font-size: 11px;
+  color: var(--aw-burgundy);
+  opacity: 0;
+  margin-bottom: 16px;
+  animation: awRiseIn 1.2s ease forwards;
+  animation-delay: 0.15s;
+  transition: opacity 0.5s ease, max-height 0.5s ease, margin 0.5s ease;
+  max-height: 48px;
+  overflow: hidden;
+}
+#scene-wife-letter .aw-letter-eyebrow.is-hidden {
+  opacity: 0;
+  max-height: 0;
+  margin: 0;
+  pointer-events: none;
+}
+.anniversary-experience .aw-letter-stage {
+  position: relative;
+  width: min(88vw, 380px);
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.anniversary-experience .aw-env-wrap {
+  width: min(76vw, 320px);
+  height: 220px;
+  position: relative;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  flex-shrink: 0;
+  transition: opacity 0.7s ease, transform 0.7s ease, height 0.7s ease;
+}
+.anniversary-experience .aw-env-wrap.open {
+  height: 72px;
+  opacity: 0;
+  transform: scale(0.88);
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% 0;
+  z-index: 1;
+}
+.anniversary-experience .aw-env-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(160deg, #f0ddd4, #dcb6a8);
+  border-radius: 6px;
+  box-shadow: 0 24px 50px var(--aw-shadow);
+}
+.anniversary-experience .aw-flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 58%;
+  background: linear-gradient(160deg, #f6e5dc, #e3c1b3);
+  clip-path: polygon(0 0, 100% 0, 50% 64%);
+  transform-origin: top center;
+  transition: transform 1.2s ease, opacity 0.6s ease;
+  z-index: 6;
+  border-radius: 6px 6px 0 0;
+}
+.anniversary-experience .aw-env-wrap.open .aw-flap {
+  transform: rotateX(180deg);
+  opacity: 0;
+}
+.anniversary-experience .aw-seal {
+  position: absolute;
+  left: 50%;
+  top: 44%;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle at 35% 30%, #9a3a4a, var(--aw-burgundy));
+  z-index: 8;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--aw-goldlight);
+  font-size: 16px;
+  transition: all 0.8s ease;
+}
+.anniversary-experience .aw-env-wrap.open .aw-seal {
+  opacity: 0;
+  transform: translate(-50%, -160%) scale(0.4) rotate(30deg);
+}
+.anniversary-experience .aw-letter-page {
+  width: 100%;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.55s ease;
+  z-index: 10;
+}
+.anniversary-experience .aw-letter-page:not(.show) {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  height: 0;
+}
+.anniversary-experience .aw-letter-page.show {
+  position: relative;
+  inset: auto;
+  height: auto;
+  overflow: visible;
+  opacity: 1;
+  pointer-events: auto;
+}
+.anniversary-experience .aw-letter-stage:has(.aw-letter-page.show) {
+  min-height: 0;
+}
+.anniversary-experience .aw-letter-paper {
+  width: 100%;
+  background: var(--aw-warmwhite);
+  border-radius: 8px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+#scene-wife-letter.aw-letter-open .aw-letter-paper {
+  min-height: min(48vh, 380px);
+  max-height: min(48vh, 380px);
+  display: flex;
+  flex-direction: column;
+}
+.anniversary-experience .aw-letter-body {
+  padding: clamp(20px, 4vw, 28px) clamp(22px, 4.5vw, 32px);
+  font-style: italic;
+  font-size: clamp(13px, 1.8vw, 15px);
+  line-height: 1.85;
+  color: var(--aw-ink);
+  text-align: left;
+  flex: 1;
+  overflow-y: auto;
+}
+.anniversary-experience .aw-letter-line {
+  position: relative;
+}
+.anniversary-experience .aw-letter-line-measure {
+  display: block;
+  visibility: hidden;
+  white-space: pre-wrap;
+  min-height: 1.85em;
+}
+.anniversary-experience .aw-letter-line-text {
+  position: absolute;
+  inset: 0;
+  white-space: pre-wrap;
+}
+.anniversary-experience .aw-letter-body div + div,
+.anniversary-experience .aw-letter-line + .aw-letter-line {
+  margin-top: 0.65em;
+}
+.anniversary-experience .aw-cursor-blink {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  background: var(--aw-burgundy);
+  animation: awBlink 1s step-start infinite;
+  vertical-align: text-bottom;
+}
+@keyframes awBlink {
+  50% { opacity: 0; }
+}
+.anniversary-experience .aw-rose-pressed {
+  opacity: 0;
+  font-size: 26px;
+  text-align: center;
+  margin-top: 6px;
+  transition: opacity 1.4s ease;
+}
+.anniversary-experience .aw-rose-pressed.show {
+  opacity: 1;
+}
+
+/* Scene 8: Vinyl */
+.anniversary-experience .aw-vinyl-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.anniversary-experience .aw-turntable {
+  width: 200px;
+  height: 130px;
+  background: linear-gradient(160deg, #8a5a4a, #5c3230);
+  border-radius: 10px;
+  position: relative;
+  box-shadow: 0 24px 50px var(--aw-shadow);
+}
+.anniversary-experience .aw-record {
+  position: absolute;
+  left: 20px;
+  top: 15px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background: repeating-radial-gradient(circle, #2b1c1c 0 3px, #1a1010 3px 6px);
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.4);
+}
+.anniversary-experience .aw-record::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--aw-goldlight);
+}
+.anniversary-experience .aw-record.spin {
+  animation: awSpin 3s linear infinite;
+}
+@keyframes awSpin {
+  to { transform: rotate(360deg); }
+}
+.anniversary-experience .aw-tonearm {
+  position: absolute;
+  right: 22px;
+  top: 10px;
+  width: 6px;
+  height: 60px;
+  background: var(--aw-goldlight);
+  border-radius: 4px;
+  transform-origin: top center;
+  transform: rotate(-25deg);
+  transition: transform 1s ease;
+}
+.anniversary-experience .aw-turntable.playing .aw-tonearm {
+  transform: rotate(5deg);
+}
+.anniversary-experience .aw-waves2 {
+  display: flex;
+  align-items: flex-end;
+  gap: 5px;
+  height: 40px;
+  margin-top: 26px;
+}
+.anniversary-experience .aw-waves2 span {
+  width: 5px;
+  background: var(--aw-burgundy);
+  border-radius: 3px;
+  height: 8px;
+  transition: height 0.2s ease;
+}
+.anniversary-experience .aw-waves2.playing span {
+  animation: awWave2 1s ease-in-out infinite;
+}
+@keyframes awWave2 {
+  0%, 100% { transform: scaleY(0.4); }
+  50% { transform: scaleY(1); }
+}
+.anniversary-experience .aw-audio-note {
+  font-family: var(--aw-sans);
+  font-size: 11px;
+  color: #8a6a6a;
+  margin-top: 14px;
+  letter-spacing: 0.03em;
+}
+
+/* Scene 9: Promise cards */
+.anniversary-experience .aw-cards-field {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 560px;
+  margin-top: 20px;
+}
+.anniversary-experience .aw-p-card {
+  width: 88px;
+  height: 118px;
+  perspective: 1000px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  transition: opacity 1s ease, transform 1s ease;
+}
+.anniversary-experience .aw-p-card.hide {
+  opacity: 0;
+  transform: scale(0.6);
+  pointer-events: none;
+}
+.anniversary-experience .aw-p-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.9s cubic-bezier(0.4, 0.2, 0.2, 1);
+  animation: awCardFloat 6s ease-in-out infinite;
+}
+@keyframes awCardFloat {
+  0%, 100% { transform: translateY(0) rotateY(var(--ry, 0deg)); }
+  50% { transform: translateY(-8px) rotateY(var(--ry, 0deg)); }
+}
+.anniversary-experience .aw-p-card.flipped .aw-p-card-inner {
+  transform: rotateY(180deg);
+  animation: none;
+}
+.anniversary-experience .aw-p-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  text-align: center;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.2);
+}
+.anniversary-experience .aw-p-front {
+  background: linear-gradient(160deg, var(--aw-warmwhite), var(--aw-cream));
+  border: 1px solid var(--aw-champagne);
+  font-size: 26px;
+}
+.anniversary-experience .aw-p-back {
+  background: linear-gradient(160deg, var(--aw-burgundy), #5c1f2c);
+  color: var(--aw-goldlight);
+  transform: rotateY(180deg);
+  font-family: var(--aw-script);
+  font-size: 14px;
+  line-height: 1.4;
+}
+.anniversary-experience .aw-combined-heart {
+  font-size: 0;
+  opacity: 0;
+  color: var(--aw-burgundy);
+  transition: all 1.6s cubic-bezier(0.2, 1.2, 0.3, 1);
+  margin-top: 10px;
+}
+.anniversary-experience .aw-combined-heart.show {
+  font-size: 64px;
+  opacity: 1;
+}
+
+/* Scene 10: Tree */
+.anniversary-experience .aw-tree-wrap {
+  position: relative;
+  width: min(88vw, 380px);
+  height: 340px;
+}
+.anniversary-experience .aw-trunk {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 90px;
+  background: linear-gradient(180deg, #7a5240, #4a2e20);
+  border-radius: 4px 4px 0 0;
+}
+.anniversary-experience .aw-canopy {
+  position: absolute;
+  bottom: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  height: 200px;
+  background: radial-gradient(circle at 40% 30%, #a9c98a, #6e8f52 70%);
+  border-radius: 50% 50% 45% 45% / 60% 60% 40% 40%;
+  opacity: 0.85;
+}
+.anniversary-experience .aw-leaf {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  border-radius: 50% 0;
+  background: var(--aw-goldlight);
+  cursor: pointer;
+  box-shadow: 0 0 6px rgba(243, 201, 139, 0.4);
+  transition: box-shadow 0.5s ease, background 0.5s ease;
+  animation: awLeafSway 4s ease-in-out infinite;
+  border: none;
+  padding: 0;
+}
+.anniversary-experience .aw-leaf.lit {
+  background: #fff3c9;
+  box-shadow: 0 0 16px 4px rgba(255, 240, 180, 0.85);
+}
+@keyframes awLeafSway {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(6deg); }
+}
+.anniversary-experience .aw-firefly {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--aw-goldlight);
+  box-shadow: 0 0 8px var(--aw-goldlight);
+  opacity: 0;
+}
+.anniversary-experience .aw-leaf-card {
+  position: absolute;
+  left: 50%;
+  top: 12%;
+  transform: translateX(-50%) scale(0.7);
+  width: min(76vw, 280px);
+  background: rgba(251, 243, 237, 0.96);
+  border-radius: 14px;
+  padding: 20px;
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.25);
+  z-index: 20;
+}
+.anniversary-experience .aw-leaf-card.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+  pointer-events: auto;
+}
+.anniversary-experience .aw-leaf-card-q {
+  font-style: italic;
+}
+.anniversary-experience .aw-leaf-card-close {
+  margin-top: 12px;
+  font-family: var(--aw-sans);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--aw-goldlight);
+  cursor: pointer;
+}
+
+/* Scene 11: Celebration */
+.anniversary-experience .aw-celebration-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 50;
+  z-index: 5;
+}
+.anniversary-experience .aw-balloon2 {
+  position: absolute;
+  bottom: -140px;
+  width: 42px;
+  height: 54px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  opacity: 0.92;
+  animation: awBalloonUp2 linear forwards;
+}
+.anniversary-experience .aw-balloon2::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  bottom: -36px;
+  width: 1px;
+  height: 36px;
+  background: rgba(74, 46, 46, 0.35);
+}
+@keyframes awBalloonUp2 {
+  from { transform: translateY(0) translateX(0); }
+  to { transform: translateY(-125vh) translateX(var(--drift, 20px)); }
+}
+.anniversary-experience .aw-bubble {
+  position: absolute;
+  bottom: -30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: awBubbleUp linear forwards;
+}
+@keyframes awBubbleUp {
+  from { transform: translateY(0); }
+  to { transform: translateY(-100vh); }
+}
+.anniversary-experience .aw-confetti2 {
+  position: absolute;
+  top: -20px;
+  width: 7px;
+  height: 13px;
+  opacity: 0.9;
+  animation: awConfFall linear forwards;
+}
+@keyframes awConfFall {
+  from { transform: translateY(0) rotate(0deg); }
+  to { transform: translateY(110vh) rotate(540deg); }
+}
+.anniversary-experience .aw-hbday2 {
+  font-size: clamp(30px, 7vw, 60px);
+  color: var(--aw-burgundy);
+  animation: awZoomPop2 1s cubic-bezier(0.2, 1.4, 0.4, 1) forwards;
+}
+@keyframes awZoomPop2 {
+  from { transform: scale(0.5); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Scene 12: Ring box ending */
+.anniversary-experience .aw-box-wrap {
+  width: min(50vw, 190px);
+  height: 160px;
+  position: relative;
+  cursor: pointer;
+}
+.anniversary-experience .aw-box-base {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 62%;
+  background: linear-gradient(160deg, #8a5a4a, #5c3230);
+  border-radius: 6px;
+  box-shadow: 0 26px 55px var(--aw-shadow);
+}
+.anniversary-experience .aw-box-lid {
+  position: absolute;
+  top: 30%;
+  width: 106%;
+  left: -3%;
+  height: 26%;
+  background: linear-gradient(160deg, #a9705a, #7a4636);
+  border-radius: 6px;
+  transform-origin: center;
+  transition: transform 1.2s ease, opacity 1.2s ease;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.anniversary-experience .aw-box-wrap.open .aw-box-lid {
+  transform: translateY(-70px) rotate(-16deg);
+  opacity: 0;
+}
+.anniversary-experience .aw-box-ribbon {
+  position: absolute;
+  left: 47%;
+  top: 0;
+  width: 6%;
+  height: 62%;
+  background: var(--aw-goldlight);
+}
+.anniversary-experience .aw-box-bow {
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 36px;
+  height: 24px;
+  z-index: 5;
+  transition: all 0.8s ease;
+}
+.anniversary-experience .aw-box-wrap.open .aw-box-bow {
+  opacity: 0;
+  transform: translate(-50%, -60px) scale(0.5);
+}
+.anniversary-experience .aw-crystal {
+  position: absolute;
+  left: 50%;
+  bottom: 38%;
+  transform: translate(-50%, 20px) scale(0.6);
+  width: 120px;
+  height: 120px;
+  opacity: 0;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: radial-gradient(circle at 40% 30%, #fff2e0, var(--aw-rosegold) 70%);
+  box-shadow: 0 0 40px 10px rgba(240, 183, 156, 0.6);
+  transition: all 1.8s cubic-bezier(0.2, 0.9, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 38px;
+}
+.anniversary-experience .aw-box-wrap.open .aw-crystal {
+  opacity: 1;
+  transform: translate(-50%, -56px) scale(1);
+}
+.anniversary-experience .aw-final-lines {
+  max-width: 520px;
+  margin-top: 24px;
+}
+.anniversary-experience .aw-fl {
+  font-style: italic;
+  font-size: clamp(15px, 2.2vw, 20px);
+  line-height: 1.9;
+  color: var(--aw-ink);
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.anniversary-experience .aw-fl.show {
+  opacity: 1;
+}
+.anniversary-experience .aw-fl-anniv {
+  margin-top: 18px;
+}
+.anniversary-experience .aw-signature2 {
+  font-family: var(--aw-script);
+  font-size: 32px;
+  color: var(--aw-burgundy);
+  margin-top: 14px;
+  min-height: 40px;
+}
+.anniversary-experience .aw-made-with {
+  font-family: var(--aw-sans);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #9a7a7a;
+  margin-top: 16px;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.anniversary-experience .aw-made-with.show {
+  opacity: 1;
+}
+
+/* Placeholder */
+.anniversary-experience .aw-ph {
+  background: linear-gradient(160deg, var(--aw-cream), var(--aw-rosegold));
+  color: var(--aw-warmwhite);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.anniversary-experience .aw-tap-hint {
+  font-family: var(--aw-sans);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #7a5a5a;
+  opacity: 0.7;
+  margin-top: 20px;
+  z-index: 5;
+}
+
+.anniversary-experience .aw-heart-cursor {
+  position: fixed;
+  pointer-events: none;
+  font-size: 14px;
+  color: var(--aw-burgundy);
+  opacity: 0;
+  z-index: 200;
+  transition: opacity 0.3s ease;
+}
+
+@media (max-width: 480px) {
+  .anniversary-experience .aw-frames-field {
+    height: 260px;
+  }
+  .anniversary-experience .aw-tree-wrap {
+    height: 300px;
+  }
+  .anniversary-experience .aw-cards-field {
+    max-width: 340px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anniversary-experience .aw-bg-layer,
+  .anniversary-experience .aw-rays,
+  .anniversary-experience .aw-fog,
+  .anniversary-experience .aw-frame-inner,
+  .anniversary-experience .aw-mem-frame,
+  .anniversary-experience .aw-p-card-inner,
+  .anniversary-experience .aw-leaf,
+  .anniversary-experience .aw-star {
+    animation: none !important;
+  }
+  .anniversary-experience .aw-bg-layer {
+    will-change: auto;
+  }
+}
+

@@ -1,0 +1,102 @@
+/* ─── Chronivs Production Polish (Phase 1) ─────────────────────────
+   Global UX refinements — no visual identity changes.
+   ───────────────────────────────────────────────────────────────── */
+
+html {
+  overflow-x: clip;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  overflow-x: clip;
+  min-height: 100dvh;
+  text-wrap: pretty;
+}
+
+#app-root {
+  overflow-x: clip;
+  max-width: 100vw;
+}
+
+/* Focus — visible only for keyboard users */
+:focus {
+  outline: none;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand-400, oklch(0.72 0.16 280));
+  outline-offset: 3px;
+}
+
+[data-theme='dark'] :focus-visible {
+  outline-color: oklch(0.82 0.12 280);
+}
+
+/* Touch comfort */
+@media (hover: none) and (pointer: coarse) {
+  button,
+  a,
+  [role='button'],
+  input[type='submit'],
+  input[type='button'],
+  label[for] {
+    touch-action: manipulation;
+  }
+}
+
+/* Experience route — fullscreen cinematic shell */
+.experience-route {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-left: env(safe-area-inset-left, 0px);
+  padding-right: env(safe-area-inset-right, 0px);
+  overscroll-behavior: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Shared experience chrome polish */
+.experience-route .prop-scene,
+.experience-route .prop-scene-motion,
+.experience-route .prop-scene-root {
+  padding-left: max(6vw, env(safe-area-inset-left, 0px));
+  padding-right: max(6vw, env(safe-area-inset-right, 0px));
+}
+
+.experience-route .prop-scene-inner,
+.experience-route .prop-scene {
+  padding-bottom: max(8vh, env(safe-area-inset-bottom, 0px));
+}
+
+/* Experience sound toggle chrome (shared component) */
+.experience-route .exp-sound-toggle {
+  top: max(18px, env(safe-area-inset-top, 0px));
+  right: max(18px, env(safe-area-inset-right, 0px));
+}
+
+.experience-route #dots {
+  bottom: max(14px, env(safe-area-inset-bottom, 0px));
+}
+
+.experience-route .scene {
+  padding-bottom: max(clamp(20px, 6vh, 56px), env(safe-area-inset-bottom, 0px));
+}
+
+/* Anniversary chrome */
+.experience-route .aw-dots {
+  top: max(18px, env(safe-area-inset-top, 0px)) !important;
+}
+
+/* Prevent layout shift on images */
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Smooth scrolling only when motion is allowed */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}

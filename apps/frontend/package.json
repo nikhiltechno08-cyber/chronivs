@@ -1,0 +1,49 @@
+{
+  "name": "@chronivs/frontend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Chronivs V2 frontend — Next.js application",
+  "scripts": {
+    "dev": "next dev --port 3000",
+    "build": "next build",
+    "start": "next start --port 3000",
+    "lint": "eslint src/",
+    "lint:fix": "eslint src/ --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@chronivs/shared": "*",
+    "@chronivs/ui": "*",
+    "@hookform/resolvers": "^5.0.1",
+    "@radix-ui/react-dialog": "^1.1.14",
+    "@radix-ui/react-dropdown-menu": "^2.1.15",
+    "@radix-ui/react-label": "^2.1.7",
+    "@radix-ui/react-slot": "^1.2.3",
+    "@radix-ui/react-toast": "^1.2.14",
+    "@tanstack/react-query": "^5.80.6",
+    "@tanstack/react-query-devtools": "^5.80.6",
+    "framer-motion": "^12.16.0",
+    "gsap": "^3.13.0",
+    "lenis": "^1.3.4",
+    "lucide-react": "^0.513.0",
+    "next": "^15.3.3",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-hook-form": "^7.57.0",
+    "zod": "^3.25.51",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@chronivs/config": "*",
+    "@next/eslint-plugin-next": "^15.3.3",
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/node": "^22.15.29",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
+    "eslint": "^9.28.0",
+    "postcss": "^8.5.4",
+    "tailwindcss": "^4.1.8",
+    "typescript": "^5.8.3"
+  }
+}
