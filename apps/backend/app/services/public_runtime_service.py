@@ -10,8 +10,6 @@ import copy
 import logging
 from datetime import datetime, timezone
 from typing import Any
-from uuid import UUID
-
 from sqlalchemy.orm import Session
 
 from app.common.enums import ExperienceStatus

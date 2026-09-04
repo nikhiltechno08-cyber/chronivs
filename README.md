@@ -74,17 +74,31 @@ npm run dev:frontend
 npm run dev:backend
 ```
 
+The backend commands automatically use `apps/backend/.venv` when it exists.
+
 ## Available Scripts
 
-| Command              | Description                          |
-| -------------------- | ------------------------------------ |
-| `npm run dev`        | Start frontend dev server            |
-| `npm run dev:frontend` | Start frontend dev server          |
-| `npm run dev:backend`  | Start backend dev server           |
-| `npm run build`      | Build all workspaces                 |
-| `npm run lint`       | Lint all workspaces                  |
-| `npm run format`     | Format code with Prettier            |
-| `npm run typecheck`  | Type-check all TypeScript workspaces |
+| Command                 | Description                          |
+| ----------------------- | ------------------------------------ |
+| `npm run dev`           | Start frontend dev server            |
+| `npm run dev:frontend`  | Start frontend dev server            |
+| `npm run dev:backend`   | Start backend dev server             |
+| `npm run start:backend` | Start backend without auto-reload    |
+| `npm run test:backend`  | Run backend tests                    |
+| `npm run build`         | Build all workspaces                 |
+| `npm run lint`          | Lint all workspaces                  |
+| `npm run format`        | Format code with Prettier            |
+| `npm run typecheck`     | Type-check all TypeScript workspaces |
+
+## Deployment entry points
+
+- Frontend root: `apps/frontend`; build with `npm run build`, start with `npm run start`.
+- Backend root: `apps/backend`; install with `pip install -r requirements.txt`, migrate with
+  `alembic upgrade head`, and start with
+  `python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
+
+See [`apps/backend/README.md`](./apps/backend/README.md) for backend configuration and
+migration details.
 
 ## Documentation
 

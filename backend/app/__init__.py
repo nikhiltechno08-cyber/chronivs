@@ -1,1 +1,0 @@
-"""Chronivs backend application package."""

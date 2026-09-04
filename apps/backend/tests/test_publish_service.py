@@ -9,7 +9,7 @@ from uuid import uuid4
 import pytest
 
 from app.common.enums import ExperienceStatus, PaymentStatus
-from app.common.exceptions import ConflictException, ValidationException
+from app.common.exceptions import ValidationException
 from app.services.publish_service import PublishService
 
 
@@ -113,6 +113,10 @@ def service(monkeypatch):
         "app.services.publish_service.published_experience_repository.slug_exists",
         lambda _db, _slug: False,
     )
+    monkeypatch.setattr(
+        "app.services.publish_service.published_experience_repository.get_by_experience_id",
+        lambda _db, _experience_id: None,
+    )
 
     created: dict[str, object] = {}
 
@@ -184,23 +188,39 @@ def test_reject_unpaid(service):
     assert db.rolled_back is True
 
 
-def test_reject_already_published(service):
+def test_publish_is_idempotent_for_existing_record(service, monkeypatch):
     svc, holder, _created = service
     exp = _experience(status=ExperienceStatus.PUBLISHED)
     holder["exp"] = exp
+    published = SimpleNamespace(
+        public_uuid=uuid4(),
+        public_slug="f8c3a74b",
+        public_url="http://localhost:3000/e/f8c3a74b",
+        template_id="birthday-girlfriend",
+        version=1,
+        published_at=datetime.now(timezone.utc),
+    )
+    monkeypatch.setattr(
+        "app.services.publish_service.published_experience_repository.get_by_experience_id",
+        lambda _db, _experience_id: published,
+    )
     db = FakeDB()
 
-    with pytest.raises(ConflictException) as exc:
-        svc.publish(db, exp.uuid)
-    assert exc.value.code == "already_published"
+    result = svc.publish(db, exp.uuid)
+
+    assert result.published is True
+    assert result.public_slug == "f8c3a74b"
+    assert db.committed is True
 
 
-def test_reject_missing_media(service):
+def test_reject_invalid_media(service):
     svc, holder, _created = service
     exp = _experience()
     snap = _snapshot()
-    snap["metadata"]["notes"]["gallery_urls"] = []
-    snap["metadata"]["notes"]["canonical"]["media"]["gallery"] = []
+    snap["metadata"]["notes"]["gallery_urls"] = ["blob:local-preview"]
+    snap["metadata"]["notes"]["canonical"]["media"]["gallery"] = [
+        {"url": "blob:local-preview"}
+    ]
     exp.experience_data = snap
     holder["exp"] = exp
     db = FakeDB()

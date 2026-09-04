@@ -9,7 +9,7 @@ from decimal import Decimal
 from sqlalchemy import String, asc, cast, desc, func, or_, select
 from sqlalchemy.orm import Session
 
-from app.admin.experience_helpers import resolve_customer_name, utc_now
+from app.admin.experience_helpers import resolve_customer_name
 from app.admin.payment_view import admin_payment_view
 from app.admin.schemas import (
     AdminPaymentDetailResponse,
