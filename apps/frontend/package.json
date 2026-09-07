@@ -5,7 +5,8 @@
   "type": "module",
   "description": "Chronivs V2 frontend — Next.js application",
   "scripts": {
-    "dev": "next dev --port 3000",
+    "dev": "next dev --turbopack --port 3000",
+    "dev:webpack": "next dev --port 3000",
     "build": "next build",
     "start": "next start --port 3000",
     "lint": "eslint src/",

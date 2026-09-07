@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Suspense } from 'react';
 
+import { LoadingFallback } from '@/components/layout';
 import { StudioPage } from '@/features/studio';
 
 export const metadata: Metadata = {
@@ -10,7 +11,13 @@ export const metadata: Metadata = {
 
 export default function StudioRoutePage() {
   return (
-    <Suspense fallback={null}>
+    <Suspense
+      fallback={
+        <div className="flex min-h-dvh items-center justify-center">
+          <LoadingFallback />
+        </div>
+      }
+    >
       <StudioPage />
     </Suspense>
   );
