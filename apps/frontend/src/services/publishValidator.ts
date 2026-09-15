@@ -177,10 +177,10 @@ export function validatePublishReady(
       );
     }
     if (failed) {
-      errors.push(
+      warnings.push(
         issue(
           'media.gallery',
-          'Some photos failed to upload. Remove or re-upload them.',
+          'Some photos failed to upload and will be omitted. You can continue without them.',
           'failed_uploads',
         ),
       );
@@ -195,7 +195,7 @@ export function validatePublishReady(
     errors.push(
       issue(
         'media.gallery',
-        'All photos must have valid Cloudinary URLs.',
+        'All photos must have valid storage URLs.',
         'invalid_cloudinary_url',
       ),
     );

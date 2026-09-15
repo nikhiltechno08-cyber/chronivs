@@ -101,18 +101,10 @@ export const CheckoutSheet = memo(function CheckoutSheet({
   const handleProceed = useCallback(async () => {
     setPaymentNote(null);
 
-    // Retries reuse the session, but only when it belongs to the experience
-    // currently being checked out — otherwise we'd publish the previous one.
-    const current = useCheckoutStore.getState();
-    const sessionMatchesExperience =
-      current.checkoutSession != null &&
-      (!current.experienceId ||
-        current.checkoutSession.experienceUuid === current.experienceId);
-
-    if (!sessionMatchesExperience) {
-      const ok = await submitCheckout();
-      if (!ok) return;
-    }
+    // Always validate and sync the latest studio state before payment. Reusing a
+    // checkout session here could otherwise publish stale photos or text.
+    const ok = await submitCheckout();
+    if (!ok) return;
 
     const paid = await startPayment();
     const session = useCheckoutStore.getState().checkoutSession;

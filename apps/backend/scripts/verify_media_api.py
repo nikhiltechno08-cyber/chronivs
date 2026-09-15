@@ -46,7 +46,7 @@ def main() -> int:
             return 1
 
         upload = client.post(
-            "/api/v1/media/test-upload",
+            "/api/v1/media/upload",
             files={"file": ("verify.jpg", jpeg, "image/jpeg")},
             data={"folder": "general"},
         )

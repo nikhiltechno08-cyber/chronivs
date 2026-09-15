@@ -25,6 +25,8 @@ def _status_for(exc: ChronivsException) -> int:
     if isinstance(exc, ValidationException):
         return 422
     if isinstance(exc, MediaException):
+        if exc.code == "cloudinary_not_configured":
+            return 503
         return 400
     if isinstance(exc, PaymentException):
         # Misconfiguration should be actionable (not "Payment Required" 402).

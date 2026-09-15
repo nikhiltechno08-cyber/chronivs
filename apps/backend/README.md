@@ -75,7 +75,6 @@ python -m uvicorn app.main:app --reload --host 127.0.0.1 --port 8000
 |--------|------|-------|
 | GET | `/api/v1/media/health` | Cloudinary configuration status |
 | POST | `/api/v1/media/upload` | Multipart image upload → Cloudinary + DB |
-| POST | `/api/v1/media/test-upload` | Temporary test upload (same pipeline) |
 | DELETE | `/api/v1/media/{id}` | Delete Cloudinary asset + DB row (UUID) |
 
 ### Upload rules

@@ -97,6 +97,16 @@ The backend commands automatically use `apps/backend/.venv` when it exists.
   `alembic upgrade head`, and start with
   `python -m uvicorn app.main:app --host 0.0.0.0 --port $PORT`.
 
+Configure secrets in the hosting provider's encrypted environment settings. Never deploy or
+commit `apps/backend/.env`.
+
+- Frontend: set `NEXT_PUBLIC_APP_URL` and `NEXT_PUBLIC_API_URL` (including `/api/v1`).
+- Backend core: set `DATABASE_URL`, `SECRET_KEY`, `PUBLIC_APP_URL`, and `CORS_ORIGINS`.
+- Photos: set `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, and
+  `CLOUDINARY_API_SECRET`. Without these, the app still supports experiences without photos.
+- Checkout: set `APP_ENV=production`, `PAYMENT_PROVIDER=razorpay`, `RAZORPAY_KEY_ID`, and
+  `RAZORPAY_KEY_SECRET`. Production intentionally refuses mock payments.
+
 See [`apps/backend/README.md`](./apps/backend/README.md) for backend configuration and
 migration details.
 

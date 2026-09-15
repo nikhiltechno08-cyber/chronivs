@@ -134,6 +134,15 @@ class MediaService:
         display_order: int = 0,
     ) -> ExperienceMedia:
         """Validate, process, upload one image, and persist ExperienceMedia."""
+        if not cloudinary_core.is_cloudinary_configured():
+            missing = settings.cloudinary_missing()
+            logger.warning("Media upload unavailable: missing Cloudinary configuration")
+            raise MediaException(
+                "Photo uploads are temporarily unavailable. You can continue without photos.",
+                code="cloudinary_not_configured",
+                details={"missing": missing},
+            )
+
         upload_name = (filename or "").strip() or None
         upload_mime = content_type
         # Duck-type UploadFile: FastAPI/Starlette UploadFile classes are not always

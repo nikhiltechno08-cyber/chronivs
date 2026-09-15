@@ -409,10 +409,11 @@ class PublishValidator:
                 )
             )
         if failed:
-            errors.append(
+            warnings.append(
                 _issue(
                     "media.gallery",
-                    "Some photos failed to upload. Remove or re-upload them.",
+                    "Some photos failed to upload and will be omitted. "
+                    "You can continue without them.",
                     "failed_uploads",
                 )
             )
@@ -423,7 +424,7 @@ class PublishValidator:
             errors.append(
                 _issue(
                     "media.gallery",
-                    "All photos must have valid Cloudinary URLs.",
+                    "All photos must have valid storage URLs.",
                     "invalid_cloudinary_url",
                 )
             )

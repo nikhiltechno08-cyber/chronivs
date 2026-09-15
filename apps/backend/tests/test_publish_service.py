@@ -164,6 +164,23 @@ def test_publish_success(service):
     assert "published" in created
 
 
+def test_publish_succeeds_without_optional_photos(service):
+    svc, holder, _created = service
+    exp = _experience()
+    snap = _snapshot()
+    snap["metadata"]["notes"]["gallery_urls"] = []
+    snap["metadata"]["notes"]["canonical"]["media"]["gallery"] = []
+    exp.experience_data = snap
+    holder["exp"] = exp
+    db = FakeDB()
+
+    result = svc.publish(db, exp.uuid)
+
+    assert result.published is True
+    assert result.status == "PUBLISHED"
+    assert db.committed is True
+
+
 def test_reject_wrong_status(service):
     svc, holder, _created = service
     exp = _experience(status=ExperienceStatus.READY_FOR_PAYMENT)

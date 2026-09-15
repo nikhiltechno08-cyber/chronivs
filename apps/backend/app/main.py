@@ -16,8 +16,11 @@ from app.core.config import settings
 
 @asynccontextmanager
 async def lifespan(_app: FastAPI):
-    """Validate Cloudinary + payment provider config on startup."""
-    configure_cloudinary(require=True)
+    """Initialize optional media and validate the required payment mode."""
+    # Photos are optional, so a missing Cloudinary configuration must not prevent
+    # drafts and checkout-without-photos from working. The upload endpoint returns
+    # an actionable 503 when storage is unavailable.
+    configure_cloudinary(require=False)
     settings.validate_payment_provider_config()
     yield
 
